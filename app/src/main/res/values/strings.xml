@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Who Paint It</string>
+    <string name="rankingBtn">RANKING PAGE</string>
+    <string name="scoreTitle">SCORES</string>
+    <string name="hintArtist">artist</string>
+    <string name="startBtn">Start !</string>
+    <string name="scoreBtn">Scores</string>
+    <string name="hintUser">username</string>
+    <string name="paintingDescription">This is a painting from ARTIC\'s artworks</string>
+    <string name="sendBtn">SEND</string>
+    <string name="nextBtnDescription">This is a next button</string>
+</resources>
