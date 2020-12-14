@@ -3,11 +3,15 @@ package Lise.whopaintit;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,9 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
     private final WeakReference<ImageView> imageViewReference;
@@ -36,6 +42,7 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected Bitmap doInBackground(Void ... voids) {
         String urlstring = "https://api.artic.edu/api/v1/artworks/search?q=impressionism&limit=1&page=";
@@ -45,6 +52,12 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
         urlstring = urlstring + numpage;
         String urlId = "";
         String image_link = "";
+        InputStream stream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return 0;
+            }
+        };
         try {
             URL url = new URL(urlstring);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -54,9 +67,20 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
                 Log.i("page_impressionism", s);
                 JSONObject json = new JSONObject(s);
                 Object data = json.get("data");
-                JSONObject datajson = new JSONObject(data.toString());
-                Object urlIdObj = datajson.get("api_link");
-                urlId = urlIdObj.toString();
+                String dataS = data.toString();
+                Log.i("acceder a data","OK");
+                Log.i("afficher les data",dataS);
+                JSONArray dataArray = new JSONArray(dataS);
+                Log.i("creation JSONArray","OK");
+                Object dataObj  = dataArray.get(0);
+                Log.i("acceder data dans Array","OK");
+                Log.i("afficher data Array",dataObj.toString());
+                JSONObject datajson = new JSONObject(dataObj.toString());
+                Log.i("creation json","OK");
+                urlId = datajson.getString("api_link");
+                Log.i("acceder au lien","OK");
+
+
 
             }  finally {
                 urlConnection.disconnect();
@@ -77,13 +101,20 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
                 Log.i("page_artist", sA);
                 JSONObject json = new JSONObject(sA);
                 Object data = json.get("data");
-                JSONObject datajson = new JSONObject(data.toString());
+                String dataS = data.toString();
+                Log.i("acceder a data","OK");
+                Log.i("afficher les data",dataS);
+                JSONObject datajson = new JSONObject(dataS);
+                Log.i("creation data json","OK");
                 Object artistObj = datajson.get("artist_title");
                 QuizzAct.artist_title = artistObj.toString();
+                Log.i("artist_title","OK");
                 Object artistDisplayObj = datajson.get("artist_display");
                 QuizzAct.artist_display = artistDisplayObj.toString();
+                Log.i("display","OK");
                 Object titleObj = datajson.get("title");
                 QuizzAct.painting_title = titleObj.toString();
+                Log.i("painting_title","OK");
                 Object thumbnailObj = datajson.get("thumbnail");
                 JSONObject thumbnail = new JSONObject(thumbnailObj.toString());
                 Object image_linkObj = thumbnail.get("url");
@@ -105,9 +136,8 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 String sI = readStream(in);
                 Log.i("image", sI);
-                JSONObject json = new JSONObject(sI);
-                return BitmapFactory.decodeStream(in);
-
+                stream = in;
+                Log.i("accede au finnaly","OK");
             }  finally {
                 urlConnection.disconnect();
             }
@@ -115,11 +145,10 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (JSONException e) {
-            e.printStackTrace();
         }
-        return null;
+        return BitmapFactory.decodeStream(stream);
     }
+
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
