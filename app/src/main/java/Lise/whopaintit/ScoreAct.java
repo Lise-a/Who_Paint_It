@@ -17,13 +17,14 @@ public class ScoreAct extends AppCompatActivity {
         setContentView(R.layout.activity_score);
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
-        Integer score = intent.getIntExtra("score", 0);
-        String result = username + " : " + score.toString() + " points !!";
+        int score = intent.getIntExtra("score", 0);
+        String result = username + " : " + Integer.toString(score) + " points !!";
         TextView FINAL = (TextView)findViewById(R.id.finalScore);
         FINAL.setText(result);
         Button nextPage = (Button)findViewById(R.id.gotoRank);
         ScoreDataBase bd = new ScoreDataBase(this);
-        bd.insertData(username,score);
+        Score S = new Score(username,score);
+        bd.insertData(S);
         nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
