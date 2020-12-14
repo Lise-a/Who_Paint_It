@@ -69,7 +69,7 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
             e.printStackTrace();
         }
         try {
-            url = new URL(urlId);
+            URL url = new URL(urlId);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -99,7 +99,7 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
             e.printStackTrace();
         }
         try {
-            url = new URL(image_link);
+            URL url = new URL(image_link);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
