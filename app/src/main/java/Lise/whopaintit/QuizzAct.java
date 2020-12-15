@@ -32,6 +32,7 @@ public class QuizzAct extends AppCompatActivity {
         ImageButton nextPage = (ImageButton)findViewById(R.id.nextPageBtn);
         TextView scoredisplay = (TextView)findViewById(R.id.scoreDisplay);
         TextView lifedisplay = (TextView)findViewById(R.id.nblifeDisplay);
+        TextView answerDisplay = (TextView)findViewById(R.id.answer);
         String questionSet = "Question " + nbquestion;
         String scoredisplaySet = "score : " + score;
         String lifedisplaySet = nblife + " : life(s)";
@@ -39,8 +40,6 @@ public class QuizzAct extends AppCompatActivity {
         scoredisplay.setText(scoredisplaySet);
         lifedisplay.setText(lifedisplaySet);
         nextPage.setVisibility(View.INVISIBLE);
-        //affichage de la peinture assync task
-        //recuperer le nom du peintre (artist_display ; artist_title, title,date)
         EditText artistAnswer = (EditText) findViewById(R.id.artistTextEdit);
         Button submit = (Button) findViewById(R.id.sendAnswerBtn);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +48,10 @@ public class QuizzAct extends AppCompatActivity {
                 String propositionArtist = artistAnswer.getText().toString();
                 Boolean bool = isright(artist_title, propositionArtist); //variable pas encore définie
                 nextPage.setVisibility(View.VISIBLE);
+                String result = painting_title + ", " + artist_display;
                 if (bool) {
-                    //afficher le fait que la reponse est bonne toast ou textview ?
+                    answerDisplay.setTextColor(getResources().getColor(R.color.green));
+                    answerDisplay.setText(result);
                     nextPage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -64,7 +65,8 @@ public class QuizzAct extends AppCompatActivity {
                     });
                 }
                 else{
-                    //afficher le fait que la réponse est mauvaise toast ou textview
+                    answerDisplay.setTextColor(getResources().getColor(R.color.red));
+                    answerDisplay.setText(result);
                     nextPage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -72,7 +74,6 @@ public class QuizzAct extends AppCompatActivity {
                                 Intent intentScore = new Intent(getApplicationContext(), ScoreAct.class);
                                 intentScore.putExtra("username",username);
                                 intentScore.putExtra("score",score);
-                                // peut etre directement l'ajouter à la bd pour evitez un traitement apres
                                 startActivity(intentScore);
                             }
                             Intent intentQuizz = new Intent(getApplicationContext(), QuizzAct.class);
