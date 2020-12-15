@@ -42,9 +42,11 @@ public class QuizzAct extends AppCompatActivity {
         nextPage.setVisibility(View.INVISIBLE);
         EditText artistAnswer = (EditText) findViewById(R.id.artistTextEdit);
         Button submit = (Button) findViewById(R.id.sendAnswerBtn);
+        submit.setVisibility(View.VISIBLE);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                submit.setVisibility(View.INVISIBLE);
                 String propositionArtist = artistAnswer.getText().toString();
                 Boolean bool = isright(artist_title, propositionArtist); //variable pas encore définie
                 nextPage.setVisibility(View.VISIBLE);
@@ -76,11 +78,14 @@ public class QuizzAct extends AppCompatActivity {
                                 intentScore.putExtra("score",score);
                                 startActivity(intentScore);
                             }
-                            Intent intentQuizz = new Intent(getApplicationContext(), QuizzAct.class);
-                            intentQuizz.putExtra("username",username);
-                            intentQuizz.putExtra("nblife",nblife-1);
-                            intentQuizz.putExtra("score",score);
-                            startActivity(intentQuizz);
+                            else {
+                                Intent intentQuizz = new Intent(getApplicationContext(), QuizzAct.class);
+                                intentQuizz.putExtra("username", username);
+                                intentQuizz.putExtra("nblife", nblife - 1);
+                                intentQuizz.putExtra("score", score);
+                                intentQuizz.putExtra("nbquestion",nbquestion+1);
+                                startActivity(intentQuizz);
+                            }
                         }
                     });
                 }
@@ -90,6 +95,6 @@ public class QuizzAct extends AppCompatActivity {
     public Boolean isright(String right, String proposition){
         //pb si l'utilisateur ecrit juste le nom de famille et si le user pense que Delacroix s'écrit De la Croix est ce qu'on valide ?
 
-        return true;
+        return right.equals(proposition);
     }
 }

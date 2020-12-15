@@ -24,8 +24,8 @@ public class WelcomeAct extends AppCompatActivity {
         scores.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intentScore = new Intent(getApplicationContext(), ScoreAct.class);
-                startActivity(intentScore);
+                Intent intentRank = new Intent(getApplicationContext(), RankingAct.class);
+                startActivity(intentRank);
             }
         });
         start.setOnClickListener(new View.OnClickListener(){

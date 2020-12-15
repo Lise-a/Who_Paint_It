@@ -60,9 +60,9 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
         };
         try {
             URL url = new URL(urlstring);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            HttpURLConnection urlConnection1 = (HttpURLConnection) url.openConnection();
             try {
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                InputStream in = new BufferedInputStream(urlConnection1.getInputStream());
                 String s = readStream(in);
                 Log.i("page_impressionism", s);
                 JSONObject json = new JSONObject(s);
@@ -83,7 +83,7 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
 
 
             }  finally {
-                urlConnection.disconnect();
+                urlConnection1.disconnect();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -94,9 +94,9 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
         }
         try {
             URL url = new URL(urlId);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            HttpURLConnection urlConnection2 = (HttpURLConnection) url.openConnection();
             try {
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                InputStream in = new BufferedInputStream(urlConnection2.getInputStream());
                 String sA = readStream(in);
                 Log.i("page_artist", sA);
                 JSONObject json = new JSONObject(sA);
@@ -111,16 +111,17 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
                 Log.i("artist_title","OK");
                 Object artistDisplayObj = datajson.get("artist_display");
                 QuizzAct.artist_display = artistDisplayObj.toString();
-                Log.i("display","OK");
+                Log.i("display",QuizzAct.artist_display);
                 Object titleObj = datajson.get("title");
                 QuizzAct.painting_title = titleObj.toString();
-                Log.i("painting_title","OK");
+                Log.i("painting_title",QuizzAct.painting_title);
                 Object thumbnailObj = datajson.get("thumbnail");
                 JSONObject thumbnail = new JSONObject(thumbnailObj.toString());
                 Object image_linkObj = thumbnail.get("url");
                 image_link = image_linkObj.toString();
+                Log.i("lien image",image_link);
             }  finally {
-                urlConnection.disconnect();
+                urlConnection2.disconnect();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -130,7 +131,8 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
             e.printStackTrace();
         }
         try {
-            URL url = new URL(image_link);
+            System.setProperty("http.agent", "Chrome");
+            URL url = new URL(image_link + "/full/843,/0/default.jpg");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -146,8 +148,8 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return BitmapFactory.decodeStream(stream);
-    }
+        Log.i("bitmapFac",stream.toString());
+        return BitmapFactory.decodeStream(stream); }
 
     private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -160,6 +162,7 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap bitmap) {
+        Log.i("dans onPostExecute","OK");
         if (imageViewReference != null) {
             ImageView imageView = imageViewReference.get();
             if (imageView != null) {

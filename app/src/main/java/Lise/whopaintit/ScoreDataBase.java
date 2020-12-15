@@ -1,10 +1,12 @@
 package Lise.whopaintit;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,19 +44,20 @@ public class ScoreDataBase extends SQLiteOpenHelper {
     public List<Score> readDatas(){
             List<Score> scoreList = new ArrayList<Score>();
             // Select All Query
-            String selectQuery = "SELECT  * FROM " + DATABASE_TABLE_NAME;
+            String select = "SELECT  * FROM " + DATABASE_TABLE_NAME;
 
-            SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(select, null);
 
-            // looping through all rows and adding to list
-            if (cursor.moveToFirst()) {
-                do {
-                    Score score = new Score(cursor.getString(1),cursor.getInt(2));
-                    scoreList.add(score);
-                } while (cursor.moveToNext());
-            }
-            return scoreList;
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                Score s = new Score(cursor.getString(cursor.getColumnIndex(USER)),cursor.getInt(cursor.getColumnIndex(SCORE)));
+                scoreList.add(s);
+                Log.i("JFL", "Reading: " + cursor.getString(cursor.getColumnIndex(USER)));
+            } while (cursor.moveToNext());
+        }
+        return scoreList;
     }
 
 }
