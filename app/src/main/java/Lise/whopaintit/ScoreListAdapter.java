@@ -28,14 +28,9 @@ public class ScoreListAdapter extends ArrayAdapter<Score> {
         //get the persons information
         String username = getItem(position).getUser();
         int score = getItem(position).getScore();
-
-
-        //Create the person object with the information
-        Score person = new Score(username,score);
-
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        convertView = inflater.inflate(mResource, parent, false);
-
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_view_layout,parent,false);
+        }
         TextView tvUsername = (TextView)convertView.findViewById(R.id.ListViewUser);
         TextView tvScore = (TextView)convertView.findViewById(R.id.ListViewScore);
 
@@ -43,5 +38,4 @@ public class ScoreListAdapter extends ArrayAdapter<Score> {
         tvScore.setText(String.valueOf(score));
         return convertView;
         }
-
 }

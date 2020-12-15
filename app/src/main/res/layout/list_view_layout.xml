@@ -14,13 +14,13 @@
         android:layout_height="50dp"
         android:id="@+id/ListViewUser"
         android:layout_weight="50"/>
-
-        <TextView
-            android:gravity="center"
-            android:text=""
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/ListViewScore"
-            android:layout_weight="50"/>
+    <TextView
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/ListViewScore"
+        android:layout_weight="50"/>
 
 </LinearLayout>

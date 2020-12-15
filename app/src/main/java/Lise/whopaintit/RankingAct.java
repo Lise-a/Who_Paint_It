@@ -28,7 +28,9 @@ public class RankingAct extends AppCompatActivity {
         if (taille > 10 ) {displayMax = 11;}
         for (int i=0; i<displayMax; i++) {
             Score initial = Score.max(ScoreList);
-            ScoreArray.add(initial);}
+            ScoreArray.add(initial);
+            ScoreList.remove(initial);
+        }
         Log.i("FIN DE BOUCLE","OK");
         ScoreListAdapter adapter = new ScoreListAdapter(this, R.layout.list_view_layout,ScoreArray);
         Log.i("CREATION ADAPTER","OK");

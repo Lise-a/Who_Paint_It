@@ -19,10 +19,10 @@ public class QuizzAct extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_quizz);
         ImageView painting = (ImageView)findViewById(R.id.paintingShow);
         importImageAsyncTask async = new importImageAsyncTask(painting);
         async.execute();
-        setContentView(R.layout.activity_quizz);
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
         int score = intent.getIntExtra("score", 0);

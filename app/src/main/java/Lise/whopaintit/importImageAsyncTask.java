@@ -47,8 +47,8 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
     protected Bitmap doInBackground(Void ... voids) {
         String urlstring = "https://api.artic.edu/api/v1/artworks/search?q=impressionism&limit=1&page=";
         double numpageDouble = Math.random();
-        numpageDouble = numpageDouble*275;
-        int numpage = (int)Math.round(numpageDouble);
+        numpageDouble = numpageDouble * 275;
+        int numpage = (int) Math.round(numpageDouble);
         urlstring = urlstring + numpage;
         String urlId = "";
         String image_link = "";
@@ -68,28 +68,27 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
                 JSONObject json = new JSONObject(s);
                 Object data = json.get("data");
                 String dataS = data.toString();
-                Log.i("acceder a data","OK");
-                Log.i("afficher les data",dataS);
+                Log.i("acceder a data", "OK");
+                Log.i("afficher les data", dataS);
                 JSONArray dataArray = new JSONArray(dataS);
-                Log.i("creation JSONArray","OK");
-                Object dataObj  = dataArray.get(0);
-                Log.i("acceder data dans Array","OK");
-                Log.i("afficher data Array",dataObj.toString());
+                Log.i("creation JSONArray", "OK");
+                Object dataObj = dataArray.get(0);
+                Log.i("acceder data dans Array", "OK");
+                Log.i("afficher data Array", dataObj.toString());
                 JSONObject datajson = new JSONObject(dataObj.toString());
-                Log.i("creation json","OK");
+                Log.i("creation json", "OK");
                 urlId = datajson.getString("api_link");
-                Log.i("acceder au lien","OK");
+                Log.i("acceder au lien", "OK");
 
 
-
-            }  finally {
+            } finally {
                 urlConnection1.disconnect();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
@@ -102,56 +101,52 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
                 JSONObject json = new JSONObject(sA);
                 Object data = json.get("data");
                 String dataS = data.toString();
-                Log.i("acceder a data","OK");
-                Log.i("afficher les data",dataS);
+                Log.i("acceder a data", "OK");
+                Log.i("afficher les data", dataS);
                 JSONObject datajson = new JSONObject(dataS);
-                Log.i("creation data json","OK");
+                Log.i("creation data json", "OK");
                 Object artistObj = datajson.get("artist_title");
                 QuizzAct.artist_title = artistObj.toString();
-                Log.i("artist_title","OK");
+                Log.i("artist_title", "OK");
                 Object artistDisplayObj = datajson.get("artist_display");
                 QuizzAct.artist_display = artistDisplayObj.toString();
-                Log.i("display",QuizzAct.artist_display);
+                Log.i("display", QuizzAct.artist_display);
                 Object titleObj = datajson.get("title");
                 QuizzAct.painting_title = titleObj.toString();
-                Log.i("painting_title",QuizzAct.painting_title);
+                Log.i("painting_title", QuizzAct.painting_title);
                 Object thumbnailObj = datajson.get("thumbnail");
                 JSONObject thumbnail = new JSONObject(thumbnailObj.toString());
                 Object image_linkObj = thumbnail.get("url");
                 image_link = image_linkObj.toString();
-                Log.i("lien image",image_link);
-            }  finally {
+                Log.i("lien image", image_link);
+            } finally {
                 urlConnection2.disconnect();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
             System.setProperty("http.agent", "Chrome");
             URL url = new URL(image_link + "/full/843,/0/default.jpg");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            try {
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                String sI = readStream(in);
-                Log.i("image", sI);
-                stream = in;
-                Log.i("accede au finnaly","OK");
-            }  finally {
-                urlConnection.disconnect();
-            }
+            InputStream in = urlConnection.getInputStream();
+            Log.i("accede au finnaly", "OK");
+            Bitmap B = BitmapFactory.decodeStream(in);
+            urlConnection.disconnect();
+            return B;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.i("bitmapFac",stream.toString());
-        return BitmapFactory.decodeStream(stream); }
+        return null;
+    }
 
-    private String readStream(InputStream is) throws IOException {
+        private String readStream(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
         for (String line = r.readLine(); line != null; line =r.readLine()){
@@ -164,8 +159,10 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
     protected void onPostExecute(Bitmap bitmap) {
         Log.i("dans onPostExecute","OK");
         if (imageViewReference != null) {
+            Log.i("dans le if","OK");
             ImageView imageView = imageViewReference.get();
             if (imageView != null) {
+                Log.i("dans le 2e if","OK");
                 imageView.setImageBitmap(bitmap);
             }}}
 
