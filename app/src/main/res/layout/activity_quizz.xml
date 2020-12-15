@@ -21,17 +21,17 @@
         android:id="@+id/artistTextEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
-        android:textSize="15sp"
-        android:inputType="textPersonName"
         android:hint="@string/hintArtist"
+        android:inputType="textPersonName"
         android:text=""
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/paintingShow"
+        app:layout_constraintVertical_bias="0.21" />
 
     <ImageView
         android:id="@+id/paintingShow"
@@ -52,10 +52,11 @@
         android:layout_height="wrap_content"
         android:text="@string/sendBtn"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintTop_toBottomOf="@+id/artistTextEdit"
+        app:layout_constraintVertical_bias="0.144" />
 
     <ImageButton
         android:id="@+id/nextPageBtn"
@@ -75,36 +76,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintBottom_toTopOf="@+id/paintingShow"
+        app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
+        app:layout_constraintVertical_bias="0.254" />
 
     <TextView
         android:id="@+id/scoreDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintBottom_toTopOf="@+id/paintingShow"
+        app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
+        app:layout_constraintVertical_bias="0.254" />
 
     <TextView
         android:id="@+id/answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textAlignment="center"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintTop_toBottomOf="@+id/artistTextEdit"
+        app:layout_constraintVertical_bias="0.171"
+        android:gravity="center_horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

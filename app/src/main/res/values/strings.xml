@@ -10,4 +10,6 @@
     <string name="sendBtn">SEND</string>
     <string name="nextBtnDescription">This is a next button</string>
     <string name="homeBtn">HOME</string>
+    <string name="gameName">Who Paint It ?</string>
+    <string name="DescriptionLogo">The logo of the game</string>
 </resources>
