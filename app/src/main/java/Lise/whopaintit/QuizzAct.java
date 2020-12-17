@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,9 +93,19 @@ public class QuizzAct extends AppCompatActivity {
             }
         });
     }
-    public Boolean isright(String right, String proposition){
+    public Boolean isright(String Right, String Proposition){
         //pb si l'utilisateur ecrit juste le nom de famille et si le user pense que Delacroix s'écrit De la Croix est ce qu'on valide ?
-
-        return right.equals(proposition);
+        String right = Right.toLowerCase();
+        String proposition = Proposition.toLowerCase();
+        if (right.equals(proposition)){return true;}
+        int tailleRep = right.length();
+        boolean Bool = false ;
+        for (int i = 0 ; i< tailleRep ; i++){
+            char charRight = Right.charAt(i);
+            if (Character.isWhitespace(charRight)){
+                Bool = (Bool || proposition.equals(right.substring(i+1)));
+            }
+        }
+        return Bool;
     }
 }

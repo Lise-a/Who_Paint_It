@@ -29,11 +29,8 @@ public class RankingAct extends AppCompatActivity {
         for (int i=0; i<displayMax; i++) {
             Score initial = Score.max(ScoreList);
             ScoreArray.add(initial);
-            ScoreList.remove(initial);
-        }
-        Log.i("FIN DE BOUCLE","OK");
+            ScoreList.remove(initial); }
         ScoreListAdapter adapter = new ScoreListAdapter(this, R.layout.list_view_layout,ScoreArray);
-        Log.i("CREATION ADAPTER","OK");
         listScore.setAdapter(adapter);
 
         Button homeBtn = (Button)findViewById(R.id.HOME);

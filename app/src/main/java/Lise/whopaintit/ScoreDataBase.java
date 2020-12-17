@@ -54,7 +54,6 @@ public class ScoreDataBase extends SQLiteOpenHelper {
             do {
                 Score s = new Score(cursor.getString(cursor.getColumnIndex(USER)),cursor.getInt(cursor.getColumnIndex(SCORE)));
                 scoreList.add(s);
-                Log.i("Lise", "Reading: " + cursor.getString(cursor.getColumnIndex(USER)));
             } while (cursor.moveToNext());
         }
         return scoreList;
