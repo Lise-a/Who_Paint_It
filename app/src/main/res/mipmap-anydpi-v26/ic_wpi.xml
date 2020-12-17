@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@drawable/ic_WPI_background"/>
-    <foreground android:drawable="@mipmap/ic_WPI_foreground"/>
+    <background android:drawable="@color/ic_wpi_background"/>
+    <foreground android:drawable="@mipmap/ic_wpi_foreground"/>
 </adaptive-icon>
