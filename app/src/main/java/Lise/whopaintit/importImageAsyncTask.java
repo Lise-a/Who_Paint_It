@@ -104,8 +104,8 @@ public class importImageAsyncTask extends AsyncTask<Void, Integer, Bitmap> {
                 Log.i("Lise","title : " + QuizzAct.painting_title);
                 Object thumbnailObj = datajson.get("thumbnail");
                 JSONObject thumbnail = new JSONObject(thumbnailObj.toString());
-                Object image_linkObj = thumbnail.get("url");
-                image_link = image_linkObj.toString();
+                Object image_linkObj = datajson.get("image_id");
+                image_link = "https://www.artic.edu/iiif/2/" + image_linkObj.toString();
                 Log.i("Lise", "lien image : " + image_link + "/full/843,/0/default.jpg");
             } finally {
                 urlConnection2.disconnect();
